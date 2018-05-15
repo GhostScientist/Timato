@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D2414588FBC2C339CAD6A684 /* Pods_Timato.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B48F42AC0667C8363A164F66 /* Pods_Timato.framework */; };
 		D3670E2520A9C7CB004BF4D1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3670E2420A9C7CB004BF4D1 /* AppDelegate.swift */; };
 		D3670E2720A9C7CB004BF4D1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3670E2620A9C7CB004BF4D1 /* ViewController.swift */; };
 		D3670E2A20A9C7CB004BF4D1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3670E2820A9C7CB004BF4D1 /* Main.storyboard */; };
@@ -15,6 +16,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		538047D61D09499EC7924EE4 /* Pods-Timato.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Timato.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Timato/Pods-Timato.debug.xcconfig"; sourceTree = "<group>"; };
+		B48F42AC0667C8363A164F66 /* Pods_Timato.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Timato.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3670E2120A9C7CB004BF4D1 /* Timato.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Timato.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3670E2420A9C7CB004BF4D1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D3670E2620A9C7CB004BF4D1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -22,6 +25,7 @@
 		D3670E2B20A9C7DA004BF4D1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D3670E2E20A9C7DA004BF4D1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D3670E3020A9C7DA004BF4D1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F438BB69D314997CF2F8ADEB /* Pods-Timato.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Timato.release.xcconfig"; path = "Pods/Target Support Files/Pods-Timato/Pods-Timato.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,17 +33,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D2414588FBC2C339CAD6A684 /* Pods_Timato.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1FD55FFEE3916B15DD5E90C7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B48F42AC0667C8363A164F66 /* Pods_Timato.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4C924C850106BD23BE37A6DA /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				538047D61D09499EC7924EE4 /* Pods-Timato.debug.xcconfig */,
+				F438BB69D314997CF2F8ADEB /* Pods-Timato.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		D3670E1820A9C7CB004BF4D1 = {
 			isa = PBXGroup;
 			children = (
 				D3670E2320A9C7CB004BF4D1 /* Timato */,
 				D3670E2220A9C7CB004BF4D1 /* Products */,
+				4C924C850106BD23BE37A6DA /* Pods */,
+				1FD55FFEE3916B15DD5E90C7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -71,9 +95,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D3670E3320A9C7DA004BF4D1 /* Build configuration list for PBXNativeTarget "Timato" */;
 			buildPhases = (
+				6B8D8BD8CB1576A30C1F6CC7 /* [CP] Check Pods Manifest.lock */,
 				D3670E1D20A9C7CB004BF4D1 /* Sources */,
 				D3670E1E20A9C7CB004BF4D1 /* Frameworks */,
 				D3670E1F20A9C7CB004BF4D1 /* Resources */,
+				3346FBBCF9AF1F7E87F52C7D /* [CP] Embed Pods Frameworks */,
+				5AD46EA780D00E509D823401 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -129,6 +156,60 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3346FBBCF9AF1F7E87F52C7D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Timato/Pods-Timato-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChameleonFramework.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Timato/Pods-Timato-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5AD46EA780D00E509D823401 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Timato/Pods-Timato-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6B8D8BD8CB1576A30C1F6CC7 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Timato-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		D3670E1D20A9C7CB004BF4D1 /* Sources */ = {
@@ -278,37 +359,33 @@
 		};
 		D3670E3420A9C7DA004BF4D1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 538047D61D09499EC7924EE4 /* Pods-Timato.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ZU78LZES28;
 				INFOPLIST_FILE = Timato/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dakotakim.Timato;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		D3670E3520A9C7DA004BF4D1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F438BB69D314997CF2F8ADEB /* Pods-Timato.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ZU78LZES28;
 				INFOPLIST_FILE = Timato/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dakotakim.Timato;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

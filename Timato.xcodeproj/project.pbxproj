@@ -100,7 +100,6 @@
 				D3670E1E20A9C7CB004BF4D1 /* Frameworks */,
 				D3670E1F20A9C7CB004BF4D1 /* Resources */,
 				3346FBBCF9AF1F7E87F52C7D /* [CP] Embed Pods Frameworks */,
-				5AD46EA780D00E509D823401 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -174,21 +173,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Timato/Pods-Timato-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		5AD46EA780D00E509D823401 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Timato/Pods-Timato-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		6B8D8BD8CB1576A30C1F6CC7 /* [CP] Check Pods Manifest.lock */ = {
@@ -365,7 +349,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ZU78LZES28;
 				INFOPLIST_FILE = Timato/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.dakotakim.Timato;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -381,7 +368,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ZU78LZES28;
 				INFOPLIST_FILE = Timato/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.dakotakim.Timato;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;

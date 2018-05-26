@@ -31,7 +31,7 @@ class ViewController: UIViewController {
     ]
     
     let workTime = 1500
-    var workTimeLength = 10
+    var workTimeLength = 1500
     let shortBreakTime = 300
     let longBreakTime = 1800
     

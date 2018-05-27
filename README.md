@@ -1,7 +1,7 @@
 # Timato
 This is a single-view iPhone Pomodoro application. The functionality is as bare as the traditional
 Pomodoro technique popularized by [Francesco Cirillo](https://cirillocompany.de/pages/pomodoro-technique "Francesco's Company").
-It features a sleek UI with flat color palettes provided by the Chameleon Framework from xyz.
+It features a sleek UI with flat color palettes provided by the Chameleon Framework from [Vicc Alexander](https://github.com/ViccAlexander/Chameleon).
 Simply tap to engage in whatever task calls your attention.
 
 # Simple UI

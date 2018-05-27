@@ -35,13 +35,19 @@ class ViewController: UIViewController {
     let shortBreakTime = 300
     let longBreakTime = 1800
     
+    var timeStarted : Date?
+    var isActive = false
+    
+    
     var timer = Timer()
     var player : AVAudioPlayer?
     var roundCounter = 1
     
     override func viewDidLoad() {
-        changeColorTheme(color: UIColor.flatRed, lightenedColor: UIColor(hexString: "FF7364")!)
+        //workTimeLength -= checkToUpdateTimer(workTime: workTimeLength)
         super.viewDidLoad()
+        changeColorTheme(color: UIColor.flatRed, lightenedColor: UIColor(hexString: "FF7364")!)
+        print(UIColor.flatRed.hexValue())
         view.backgroundColor = UIColor.flatRed
         timerLabel.text = String(format: "%02d", (workTimeLength/60)) + ":" + String(format: "%02d", (workTimeLength % 60))
         inspirationalQuoteLabel.text = inspirationQuote[Int(arc4random_uniform(UInt32(inspirationQuote.count)))]
@@ -130,6 +136,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var playButtonOutlet: UIButton!
     
     @IBAction func playButtonTapped(_ sender: Any) {
+        timeStarted = Date()
+        isActive = true
         play()
     }
     
@@ -137,11 +145,25 @@ class ViewController: UIViewController {
     @IBOutlet weak var stopButtonOutlet: UIButton!
     
     @IBAction func stopButtonTapped(_ sender: Any) {
+        isActive = false
         changeColorTheme(color: UIColor.flatRed, lightenedColor: UIColor(hexString: "FF7364")!)
         timer.invalidate()
         playButtonOutlet.isEnabled = true
         stopButtonOutlet.isEnabled = true
     }
     
+    func checkToUpdateTimer(workTime : Int) -> Int {
+        var secondsSince = 0.0
+        if let timerBegunAt = timeStarted {
+            if isActive {
+                secondsSince = -timerBegunAt.timeIntervalSince(Date())
+                print(secondsSince)
+            } else {
+                secondsSince = 0.0
+            }
+        }
+        print(workTime - Int(secondsSince))
+        return workTime - Int(secondsSince)
+    }
 }
 

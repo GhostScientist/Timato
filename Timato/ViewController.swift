@@ -146,9 +146,9 @@ class ViewController: UIViewController {
             playButtonOutlet.isEnabled = true
             stopButtonOutlet.setTitle("Reset", for: .normal)
         } else if !isActive && stopButtonOutlet.currentTitle! == "Reset" {
-            let alert = UIAlertController(title: "Reset Timer", message: "Would you like to reset the timer?", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Reset Timer?", message: "Would you like to reset the timer?", preferredStyle: .alert)
             let refusedAction = UIAlertAction(title: "No", style: .default, handler: nil)
-            let offeredAction = UIAlertAction(title: "Reset", style: .default) { (UIAlertAction) in
+            let offeredAction = UIAlertAction(title: "Yes", style: .default) { (UIAlertAction) in
                 if self.roundCounter % 2 == 1 {
                     self.workTimeLength = 1500
                     self.timerLabel.text = String(format: "%01d", (self.workTimeLength/60)) + ":" + String(format: "%02d", (self.workTimeLength % 60))

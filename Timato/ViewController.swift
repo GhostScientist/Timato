@@ -145,7 +145,7 @@ class ViewController: UIViewController {
             changeColorTheme(color: UIColor.flatRed, lightenedColor: UIColor(hexString: "FF7364")!)
             playButtonOutlet.isEnabled = true
             stopButtonOutlet.setTitle("Reset", for: .normal)
-        } else if !isActive && stopButtonOutlet.currentTitle! == "Reset" {
+        } else if !isActive && stopButtonOutlet.currentTitle! ==  "Reset" {
             let alert = UIAlertController(title: "Reset Timer?", message: "Would you like to reset the timer?", preferredStyle: .alert)
             let refusedAction = UIAlertAction(title: "No", style: .default, handler: nil)
             let offeredAction = UIAlertAction(title: "Yes", style: .default) { (UIAlertAction) in

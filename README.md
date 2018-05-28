@@ -9,13 +9,10 @@ Timato's UI is simple. It consists of a motivational quotation, a timer, and two
 A green background means the timer is active. 
 
 ![Portrait Mode](/Screenshots/IMG_3677.PNG) 
-![Landscape Mode](Screenshots/IMG_3678.PNG)
-
 
 A red background signifies that the timer is paused.
 
-<img src="/Screenshots/IMG_3679.PNG" width="250"> 
-<img src="/Screenshots/IMG_3680.PNG" width="400">
+![Portrait Mode](/Screenshots/IMG_3679.PNG) 
 
 Upon launching the app, users will be met with a simple screen displaying a countdown timer, an inspirational quote,
 a 'go' button, and a 'stop' button. The quotation will change when after the completion of a single work-break cycle.

@@ -8,8 +8,9 @@ Simply tap to engage in whatever task calls your attention.
 Timato's UI is simple. It consists of a motivational quotation, a timer, and two buttons. 
 A green background means the timer is active. 
 
-<img src="/Screenshots/IMG_3677.PNG" width="250"> 
-<img src="/Screenshots/IMG_3678.PNG" width="400">
+![Portrait Mode](/Screenshots/IMG_3677.PNG) 
+![Landscape Mode](Screenshots/IMG_3678.PNG)
+
 
 A red background signifies that the timer is paused.
 

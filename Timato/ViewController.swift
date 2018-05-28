@@ -20,7 +20,6 @@ import AVFoundation
 
 class ViewController: UIViewController {
 
-    
     @IBOutlet weak var inspirationalQuoteLabel: UILabel!
     @IBOutlet weak var timerLabel: UILabel!
     
@@ -35,17 +34,17 @@ class ViewController: UIViewController {
     let shortBreakTime = 300
     let longBreakTime = 1800
     
-    var timeStarted : Date?
+    var timeViewLeftForeground = Date()
     var isActive = false
-    
     
     var timer = Timer()
     var player : AVAudioPlayer?
     var roundCounter = 1
     
     override func viewDidLoad() {
-        //workTimeLength -= checkToUpdateTimer(workTime: workTimeLength)
         super.viewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.updateTimer), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.saveTime), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
         changeColorTheme(color: UIColor.flatRed, lightenedColor: UIColor(hexString: "FF7364")!)
         print(UIColor.flatRed.hexValue())
         view.backgroundColor = UIColor.flatRed
@@ -54,9 +53,16 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(false)
+        timeViewLeftForeground = Date()
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     @objc func counter() {
         workTimeLength -= 1
         timerLabel.text = "\(workTimeLength / 60):" + String(format: "%02d", (workTimeLength % 60))
+        //timeViewLeftForeground = Date()
         
         if workTimeLength == 0 && (roundCounter % 2 == 1) {
             timer.invalidate()
@@ -75,10 +81,7 @@ class ViewController: UIViewController {
             
             alert.addAction(continueAction)
             present(alert, animated: true, completion: nil)
-            
-        }
-            
-        else if workTimeLength == 0 && (roundCounter % 2 == 0) {
+        } else if workTimeLength == 0 && (roundCounter % 2 == 0) {
             timer.invalidate()
             roundCounter += 1
             workTimeLength = workTime
@@ -88,16 +91,9 @@ class ViewController: UIViewController {
                 self.play()
                 self.inspirationalQuoteLabel.text = self.inspirationQuote[Int(arc4random_uniform(UInt32(self.inspirationQuote.count)))]
             })
-            
             alert.addAction(continueAction)
             present(alert, animated: true, completion: nil)
-            
         }
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     func play() {
@@ -132,38 +128,37 @@ class ViewController: UIViewController {
         timerLabel.textColor = ContrastColorOf(color, returnFlat: true)
     }
 
-    
     @IBOutlet weak var playButtonOutlet: UIButton!
-    
     @IBAction func playButtonTapped(_ sender: Any) {
-        timeStarted = Date()
         isActive = true
         play()
     }
     
-    
     @IBOutlet weak var stopButtonOutlet: UIButton!
-    
     @IBAction func stopButtonTapped(_ sender: Any) {
         isActive = false
         changeColorTheme(color: UIColor.flatRed, lightenedColor: UIColor(hexString: "FF7364")!)
         timer.invalidate()
         playButtonOutlet.isEnabled = true
-        stopButtonOutlet.isEnabled = true
+        stopButtonOutlet.isEnabled = false
     }
     
-    func checkToUpdateTimer(workTime : Int) -> Int {
-        var secondsSince = 0.0
-        if let timerBegunAt = timeStarted {
-            if isActive {
-                secondsSince = -timerBegunAt.timeIntervalSince(Date())
-                print(secondsSince)
-            } else {
-                secondsSince = 0.0
+    @objc func updateTimer() {
+        if isActive {
+            print("Does timeViewLeftForeground have a value? It is \(timeViewLeftForeground)")
+            let difference = Int(timeViewLeftForeground.timeIntervalSinceNow)
+            print("The difference is \(difference)")
+            if -difference >= workTimeLength {
+                workTimeLength = 0
+            } else if (-difference > 0) && (-difference < workTimeLength) {
+                workTimeLength += difference
             }
         }
-        print(workTime - Int(secondsSince))
-        return workTime - Int(secondsSince)
+    }
+    
+    @objc func saveTime() {
+        timeViewLeftForeground = Date()
+        print("Date saved." )
     }
 }
 

@@ -48,7 +48,7 @@ class ViewController: UIViewController {
         changeColorTheme(color: UIColor.flatRed, lightenedColor: UIColor(hexString: "FF7364")!)
         print(UIColor.flatRed.hexValue())
         view.backgroundColor = UIColor.flatRed
-        timerLabel.text = String(format: "%02d", (workTimeLength/60)) + ":" + String(format: "%02d", (workTimeLength % 60))
+        timerLabel.text = String(format: "%01d", (workTimeLength/60)) + ":" + String(format: "%02d", (workTimeLength % 60))
         inspirationalQuoteLabel.text = inspirationQuote[Int(arc4random_uniform(UInt32(inspirationQuote.count)))]
         // Do any additional setup after loading the view, typically from a nib.
     }
@@ -130,17 +130,44 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var playButtonOutlet: UIButton!
     @IBAction func playButtonTapped(_ sender: Any) {
+        if stopButtonOutlet.currentTitle == "Reset" {
+            stopButtonOutlet.setTitle("Stop", for: .normal)
+        }
         isActive = true
         play()
     }
     
     @IBOutlet weak var stopButtonOutlet: UIButton!
     @IBAction func stopButtonTapped(_ sender: Any) {
-        isActive = false
-        changeColorTheme(color: UIColor.flatRed, lightenedColor: UIColor(hexString: "FF7364")!)
-        timer.invalidate()
-        playButtonOutlet.isEnabled = true
-        stopButtonOutlet.isEnabled = false
+        if isActive {
+            isActive = false
+            timer.invalidate()
+            changeColorTheme(color: UIColor.flatRed, lightenedColor: UIColor(hexString: "FF7364")!)
+            playButtonOutlet.isEnabled = true
+            stopButtonOutlet.setTitle("Reset", for: .normal)
+        } else if !isActive && stopButtonOutlet.currentTitle! == "Reset" {
+            let alert = UIAlertController(title: "Reset Timer", message: "Would you like to reset the timer?", preferredStyle: .alert)
+            let refusedAction = UIAlertAction(title: "No", style: .default, handler: nil)
+            let offeredAction = UIAlertAction(title: "Reset", style: .default) { (UIAlertAction) in
+                if self.roundCounter % 2 == 1 {
+                    self.workTimeLength = 1500
+                    self.timerLabel.text = String(format: "%01d", (self.workTimeLength/60)) + ":" + String(format: "%02d", (self.workTimeLength % 60))
+                } else if self.roundCounter % 2 == 0 && self.roundCounter % 10 == 0 {
+                    self.workTimeLength = 1800
+                    self.timerLabel.text = String(format: "%01d", (self.workTimeLength/60)) + ":" + String(format: "%02d", (self.workTimeLength % 60))
+                } else if self.roundCounter % 2 == 0 {
+                    self.workTimeLength = 300
+                    self.timerLabel.text = String(format: "%01d", (self.workTimeLength/60)) + ":" + String(format: "%02d", (self.workTimeLength % 60))
+                }
+                self.stopButtonOutlet.setTitle("Stop", for: .normal)
+                self.stopButtonOutlet.isEnabled = false
+            }
+            print("Reset is being tapped.")
+            alert.addAction(offeredAction)
+            alert.addAction(refusedAction)
+            self.present(alert, animated: true, completion: nil)
+        }
+        
     }
     
     @objc func updateTimer() {

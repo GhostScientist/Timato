@@ -13,7 +13,6 @@
 		D3670E2A20A9C7CB004BF4D1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3670E2820A9C7CB004BF4D1 /* Main.storyboard */; };
 		D3670E2C20A9C7DA004BF4D1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3670E2B20A9C7DA004BF4D1 /* Assets.xcassets */; };
 		D3670E2F20A9C7DA004BF4D1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3670E2D20A9C7DA004BF4D1 /* LaunchScreen.storyboard */; };
-		D3AB857620BA8DA500915C04 /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AB857520BA8DA500915C04 /* LaunchViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,7 +25,6 @@
 		D3670E2B20A9C7DA004BF4D1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D3670E2E20A9C7DA004BF4D1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D3670E3020A9C7DA004BF4D1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D3AB857520BA8DA500915C04 /* LaunchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewController.swift; sourceTree = "<group>"; };
 		F438BB69D314997CF2F8ADEB /* Pods-Timato.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Timato.release.xcconfig"; path = "Pods/Target Support Files/Pods-Timato/Pods-Timato.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -86,7 +84,6 @@
 				D3670E2B20A9C7DA004BF4D1 /* Assets.xcassets */,
 				D3670E2D20A9C7DA004BF4D1 /* LaunchScreen.storyboard */,
 				D3670E3020A9C7DA004BF4D1 /* Info.plist */,
-				D3AB857520BA8DA500915C04 /* LaunchViewController.swift */,
 			);
 			path = Timato;
 			sourceTree = "<group>";
@@ -204,7 +201,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D3670E2720A9C7CB004BF4D1 /* ViewController.swift in Sources */,
-				D3AB857620BA8DA500915C04 /* LaunchViewController.swift in Sources */,
 				D3670E2520A9C7CB004BF4D1 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

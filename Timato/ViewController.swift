@@ -14,6 +14,7 @@ import UIKit
 import ChameleonFramework
 import Foundation
 import AVFoundation
+import UserNotifications
 //I will use the chameleron framework to create Flat colors.
 //During the work cycle, it will be a flat green.
 //During the break cycle, it will be a flat red.
@@ -30,7 +31,7 @@ class ViewController: UIViewController {
     ]
     
     let workTime = 1500
-    var workTimeLength = 1500
+    var workTimeLength = 5
     let shortBreakTime = 300
     let longBreakTime = 1800
     
@@ -43,6 +44,13 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { (success, error) in
+            if error != nil {
+                print("Authorization Unsuccessful")
+            } else {
+                print("Authorization Successful")
+            }
+        }
         NotificationCenter.default.addObserver(self, selector: #selector(ViewController.updateTimer), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(ViewController.saveTime), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
         changeColorTheme(color: UIColor.flatRed, lightenedColor: UIColor(hexString: "FF7364")!)
@@ -63,9 +71,10 @@ class ViewController: UIViewController {
         workTimeLength -= 1
         timerLabel.text = "\(workTimeLength / 60):" + String(format: "%02d", (workTimeLength % 60))
         //timeViewLeftForeground = Date()
-        
+        print(workTimeLength)
         if workTimeLength == 0 && (roundCounter % 2 == 1) {
             timer.invalidate()
+            isActive = false
             roundCounter += 1
             if roundCounter % 10 == 0 {
                 workTimeLength = longBreakTime
@@ -78,10 +87,10 @@ class ViewController: UIViewController {
             let continueAction = UIAlertAction(title: "Go", style: .default, handler: { (UIAlertAction) in
                 self.play()
             })
-            
             alert.addAction(continueAction)
             present(alert, animated: true, completion: nil)
         } else if workTimeLength == 0 && (roundCounter % 2 == 0) {
+            isActive = false
             timer.invalidate()
             roundCounter += 1
             workTimeLength = workTime
@@ -97,6 +106,13 @@ class ViewController: UIViewController {
     }
     
     func play() {
+        scheduledNotification(timeUntil: TimeInterval(workTimeLength)) { (success) in
+            if success {
+                print("Successfully Notified")
+            } else {
+                print("Problem Notifying")
+            }
+        }
         changeColorTheme(color: UIColor.flatGreen, lightenedColor: UIColor(hexString: "7EE7A8")!)
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(ViewController.counter), userInfo: nil, repeats: true)
         playButtonOutlet.isEnabled = false
@@ -139,6 +155,7 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var stopButtonOutlet: UIButton!
     @IBAction func stopButtonTapped(_ sender: Any) {
+        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
         if isActive {
             isActive = false
             timer.invalidate()
@@ -177,6 +194,8 @@ class ViewController: UIViewController {
             print("The difference is \(difference)")
             if -difference >= workTimeLength {
                 workTimeLength = 0
+                timer.invalidate()
+                timerLabel.text = String(format: "%01d", (self.workTimeLength/60)) + ":" + String(format: "%02d", (self.workTimeLength % 60))
             } else if (-difference > 0) && (-difference < workTimeLength) {
                 workTimeLength += difference
             }
@@ -186,6 +205,21 @@ class ViewController: UIViewController {
     @objc func saveTime() {
         timeViewLeftForeground = Date()
         print("Date saved." )
+    }
+    
+    func scheduledNotification(timeUntil: TimeInterval, completion: @escaping (_ success: Bool) -> ()){
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: timeUntil, repeats: false)
+        let content = UNMutableNotificationContent()
+        content.title = "Timer's Up!"
+        content.body = "Great job! Return to Timato to see what's up next!"
+        let request = UNNotificationRequest(identifier: "tempIdentifier", content: content, trigger: trigger)
+        UNUserNotificationCenter.current().add(request) { (error) in
+            if error != nil {
+                completion(false)
+            } else {
+                completion(true)
+            }
+        }
     }
 }
 

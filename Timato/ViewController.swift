@@ -6,9 +6,10 @@
 //  Copyright © 2018 Dakota Kim. All rights reserved.
 //
 //  This is a minimal pomodoro timer inspired by the Pomodoro
-//  technique popularized by xxx. This is also a learning
+//  technique popularized by Francisco Cirillo. This is also a learning
 //  process to learn how to create an app store listing.
 //  I will update the project with features as I see fit, if at all.
+//
 
 import UIKit
 import ChameleonFramework
@@ -27,13 +28,14 @@ class ViewController: UIViewController {
     var inspirationQuote = ["Hero is your middle name.",
                             "All the strength you need is inside.",
                             "You can go anywhere.",
-                            "Success is the best revenge."
+                            "Success is the best revenge.",
+                            "I believe in you."
     ]
     
-    let workTime = 1500
+    let workTime = 5
     var workTimeLength = 5
-    let shortBreakTime = 300
-    let longBreakTime = 1800
+    let shortBreakTime = 5
+    let longBreakTime = 20
     
     var timeViewLeftForeground = Date()
     var isActive = false
@@ -53,6 +55,7 @@ class ViewController: UIViewController {
         }
         NotificationCenter.default.addObserver(self, selector: #selector(ViewController.updateTimer), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(ViewController.saveTime), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.pushAlert), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
         changeColorTheme(color: UIColor.flatRed, lightenedColor: UIColor(hexString: "FF7364")!)
         print(UIColor.flatRed.hexValue())
         view.backgroundColor = UIColor.flatRed
@@ -70,39 +73,10 @@ class ViewController: UIViewController {
     @objc func counter() {
         workTimeLength -= 1
         timerLabel.text = "\(workTimeLength / 60):" + String(format: "%02d", (workTimeLength % 60))
+        pushAlert()
         //timeViewLeftForeground = Date()
         print(workTimeLength)
-        if workTimeLength == 0 && (roundCounter % 2 == 1) {
-            timer.invalidate()
-            isActive = false
-            roundCounter += 1
-            if roundCounter % 10 == 0 {
-                workTimeLength = longBreakTime
-            }
-            else {
-                workTimeLength = shortBreakTime
-            }
-            //playSound()
-            let alert = UIAlertController(title: "Break Time!", message: "You have a \(workTimeLength / 60) minute break. Tap 'Go' to begin.", preferredStyle: .alert)
-            let continueAction = UIAlertAction(title: "Go", style: .default, handler: { (UIAlertAction) in
-                self.play()
-            })
-            alert.addAction(continueAction)
-            present(alert, animated: true, completion: nil)
-        } else if workTimeLength == 0 && (roundCounter % 2 == 0) {
-            isActive = false
-            timer.invalidate()
-            roundCounter += 1
-            workTimeLength = workTime
-            //playSound()
-            let alert = UIAlertController(title: "Work Time!", message: "You have \(workTimeLength / 60) minutes of work. Tap 'Go' to begin.", preferredStyle: .alert)
-            let continueAction = UIAlertAction(title: "Go", style: .default, handler: { (UIAlertAction) in
-                self.play()
-                self.inspirationalQuoteLabel.text = self.inspirationQuote[Int(arc4random_uniform(UInt32(self.inspirationQuote.count)))]
-            })
-            alert.addAction(continueAction)
-            present(alert, animated: true, completion: nil)
-        }
+        
     }
     
     func play() {
@@ -113,6 +87,7 @@ class ViewController: UIViewController {
                 print("Problem Notifying")
             }
         }
+        isActive = true
         changeColorTheme(color: UIColor.flatGreen, lightenedColor: UIColor(hexString: "7EE7A8")!)
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(ViewController.counter), userInfo: nil, repeats: true)
         playButtonOutlet.isEnabled = false
@@ -149,17 +124,17 @@ class ViewController: UIViewController {
         if stopButtonOutlet.currentTitle == "Reset" {
             stopButtonOutlet.setTitle("Stop", for: .normal)
         }
-        isActive = true
         play()
     }
     
     @IBOutlet weak var stopButtonOutlet: UIButton!
     @IBAction func stopButtonTapped(_ sender: Any) {
         UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+        changeColorTheme(color: UIColor.flatRed, lightenedColor: UIColor(hexString: "FF7364")!)
         if isActive {
             isActive = false
+            print("Is this being tapped? If you can see this, yes!")
             timer.invalidate()
-            changeColorTheme(color: UIColor.flatRed, lightenedColor: UIColor(hexString: "FF7364")!)
             playButtonOutlet.isEnabled = true
             stopButtonOutlet.setTitle("Reset", for: .normal)
         } else if !isActive && stopButtonOutlet.currentTitle! ==  "Reset" {
@@ -184,7 +159,6 @@ class ViewController: UIViewController {
             alert.addAction(refusedAction)
             self.present(alert, animated: true, completion: nil)
         }
-        
     }
     
     @objc func updateTimer() {
@@ -205,6 +179,55 @@ class ViewController: UIViewController {
     @objc func saveTime() {
         timeViewLeftForeground = Date()
         print("Date saved." )
+    }
+    
+    @objc func pushAlert() {
+        if workTimeLength == 0 && (roundCounter % 2 == 1) {
+            timer.invalidate()
+            isActive = false
+            roundCounter += 1
+            if roundCounter % 10 == 0 {
+                workTimeLength = longBreakTime
+            }
+            else {
+                workTimeLength = shortBreakTime
+            }
+            //playSound()
+            let alert = UIAlertController(title: "Break Time!", message: "You have a \(workTimeLength / 60) minute break. Tap 'Go' to begin.", preferredStyle: .alert)
+            let continueAction = UIAlertAction(title: "Go", style: .default, handler: { (UIAlertAction) in
+                self.play()
+            })
+            let pauseAction = UIAlertAction(title: "Pause", style: .default) { (UIAlertAction) in
+                self.stopButtonTapped(self)
+                self.isActive = false
+                self.playButtonOutlet.isEnabled = true
+                self.timerLabel.text = String(format: "%01d", (self.workTimeLength/60)) + ":" + String(format: "%02d", (self.workTimeLength % 60))
+            }
+            alert.addAction(continueAction)
+            alert.addAction(pauseAction)
+            present(alert, animated: true, completion: nil)
+        } else if workTimeLength == 0 && (roundCounter % 2 == 0) {
+            isActive = false
+            timer.invalidate()
+            roundCounter += 1
+            workTimeLength = workTime
+            //playSound()
+            let alert = UIAlertController(title: "Work Time!", message: "You have \(workTimeLength / 60) minutes of work. Tap 'Go' to begin.", preferredStyle: .alert)
+            let continueAction = UIAlertAction(title: "Go", style: .default, handler: { (UIAlertAction) in
+                self.play()
+                self.inspirationalQuoteLabel.text = self.inspirationQuote[Int(arc4random_uniform(UInt32(self.inspirationQuote.count)))]
+            })
+            let pauseAction = UIAlertAction(title: "Pause", style: .default) { (UIAlertAction) in
+                self.timer.invalidate()
+            }
+            alert.addAction(continueAction)
+            alert.addAction(pauseAction)
+            present(alert, animated: true, completion: nil)
+        }
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     func scheduledNotification(timeUntil: TimeInterval, completion: @escaping (_ success: Bool) -> ()){
